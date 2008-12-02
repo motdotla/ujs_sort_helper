@@ -110,8 +110,11 @@ module UjsSortHelper
     end
     caption = titleize(Inflector::humanize(column)) unless caption
     
-    url = { :sort_key => column, :sort_order => order, :filter => params[:filter]}
-    url.merge!({:q => params[:q]}) unless params[:q].nil?
+    url = "#{request.path}?sort_key=#{column}&sort_order=#{order}"
+    url << "&q=#{params[:q]}" unless params[:q].nil?
+    
+    # url = { :sort_key => column, :sort_order => order, :filter => params[:filter]}
+    # url.merge!({:q => params[:q]}) unless params[:q].nil?
     
     link_to(caption, url, :class => "sort_link #{order if key == column}")
   end
